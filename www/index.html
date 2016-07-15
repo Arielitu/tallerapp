@@ -31,28 +31,29 @@
 
 	<div id="contenido" class="container-fluid"></div>
 
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="cordova.js"></script>
+    
     <script type="text/javascript">
 
-		$(document).ready(function(){
-	    	var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes";
+    	document.addEventListener('deviceready', function(){
 
-	        $.getJSON(url, function(data){
-	        	jsonObj = data;
-	        }).success(function(){
-	            $.each(jsonObj, function(i, field){
+    		var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes";
+
+	        $.getJSON(url)
+	         .done(function(data){
+	            $.each(data, function(i, field){
 	                var txt = "";
 
-                    txt += "<article id="+field.id+"><a class='no-styled-anchor' href='/articulo-detalle.html?"+field.id+"'><div class='panel panel-info'><div class='panel-heading'><h3 class='panel-title'></h3>"+field.nombre+"</h3></div><div class='panel-body'><div class='media'><div class='media-left'> <img class='media-object' src='icon.png' alt='...'' width='80'></div><div class='media-body'>"+field.descripcion+"</div></div></div></div></div></a></article>";
+	                txt += "<article id="+field.id+"><a class='no-styled-anchor' href='/articulo-detalle.html?id="+field.id+"'><div class='panel panel-info'><div class='panel-heading'><h3 class='panel-title'></h3>"+field.nombre+"</h3></div><div class='panel-body'><div class='media'><div class='media-left'> <img class='media-object' src='"+field['url-imagen']+"' alt='...'' width='80'></div><div class='media-body'>"+field.descripcion+"</div></div></div></div></div></a></article>";
 
                     if(txt != ""){
                         $("#contenido").append(txt);
                     }
             		});
-            	});
-	        });
+            });
+    	}, false);
     </script>
 </body>
 

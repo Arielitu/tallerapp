@@ -7,7 +7,8 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <title>Detalle Punto de Interés</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  
 </head>
 	<body>
 		<nav class="navbar navbar-inverse">
@@ -20,7 +21,47 @@
 		</nav>
 		
 		<h1>Soy un punto</h1>
+		<div id="contenido" class="container-fluid"></div>
 		<a href="index.html" class="btn btn-large btn-info">Volver</a>
-	</body>
 
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+	</body>
+		<script type="text/javascript">
+			$(document).ready(function(){
+	    	var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes/1";
+
+	        $.getJSON(url, function(data){
+	        	jsonObj = data;
+	        }).success(function(){
+	            $.each(jsonObj, function(i, field){
+	                var txt = "";
+
+                    txt += "<article id="+field.id+">articulo</article>";
+
+                    if(txt != ""){
+                        $("#contenido").append(txt);
+                    }
+            		});
+            	});
+	        });
+
+			// $(document).ready(function(){
+			// var idPunto = window.location.search.substring(1);
+	  //   	var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes/"+idPunto;
+
+	  //       $.getJSON(url, function(data){
+	  //       	jsonObj = data;
+	  //       }).success(function(){
+	  //           $.each(jsonObj, function(i, field){
+	  //               var txt = "";
+	  //               text+="gola "+field.id+"";
+   //                  if(txt != ""){
+   //                      $("#contenido").append(txt);
+   //                  }
+   //          		});
+   //          	});
+	  //       });
+		</script>
 </html>
