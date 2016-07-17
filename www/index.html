@@ -12,6 +12,7 @@
 
 <body>
 	<style type="text/css">
+		
 		.no-styled-anchor,
 		.no-styled-anchor:hover,
 		.no-styled-anchor:visited,
@@ -19,6 +20,10 @@
 		   color: black;
 	 	   text-decoration: none;
 		}
+		#btn-mapa{
+			font-size: 20px;
+		}
+
 	</style>
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
@@ -29,7 +34,10 @@
 	  </div><!-- /.container-fluid -->
 	</nav>
 
-	<div id="contenido" class="container-fluid"></div>
+	<div id="contenido" class="container-fluid">
+		<a id="btn-mapa" class="btn btn-success col-xs-12" onclick="window.location.href='mapa.html'">MAPA</a>
+		<br/><br/><br/>
+	</div>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
@@ -39,13 +47,12 @@
 
     	document.addEventListener('deviceready', function(){
 
-    		var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes";
+    		var url ="http://192.168.1.104/taller/web/app_dev.php/api/puntos-interes";
 
 	        $.getJSON(url)
 	         .done(function(data){
 	            $.each(data, function(i, field){
 	                var txt = "";
-
 	                txt += "<article id="+field.id+"><a class='no-styled-anchor' href='/articulo-detalle.html?id="+field.id+"'><div class='panel panel-info'><div class='panel-heading'><h3 class='panel-title'></h3>"+field.nombre+"</h3></div><div class='panel-body'><div class='media'><div class='media-left'> <img class='media-object' src='"+field['url-imagen']+"' alt='...'' width='80'></div><div class='media-body'>"+field.descripcion+"</div></div></div></div></div></a></article>";
 
                     if(txt != ""){
@@ -54,6 +61,7 @@
             		});
             });
     	}, false);
+
     </script>
 </body>
 
