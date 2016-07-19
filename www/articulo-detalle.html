@@ -1,66 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="es-AR">
 
 <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <title>Detalle Punto de Interés</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-  
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <title>Detalle punto de interés</title>
+
+    <!-- Materialize 
+    –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+    <link rel="stylesheet" type="text/css" href="css/icon.css" />
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
+
 </head>
-	<body>
-		<nav class="navbar navbar-inverse">
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header text-center" style="color: white">
-		      <h2>Detalle Punto de Interés</h2>
-		    </div>
-		  </div><!-- /.container-fluid -->
-		</nav>
-		
-		<h1>Soy un punto</h1>
-		<div id="contenido" class="container-fluid"></div>
-		<a href="index.html" class="btn btn-large btn-info">Volver</a>
 
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="cordova.js"></script>
-	</body>
-		<script type="text/javascript">
-			$(document).ready(function(){
-	    	var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes/1";
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+                <ul class="left">
+                    <li><a href="index.html"><i class="material-icons">navigate_before</i></a></li>
+                </ul>
+                <a href="#" class="brand-logo center">Detalles</a>
+            </div>
+        </nav>
+        <div id="contenido" class="container-fluid"></div>
 
-	        $.getJSON(url, function(data){
-	        	jsonObj = data;
-	        }).success(function(){
-	            $.each(jsonObj, function(i, field){
-	                var txt = "";
-                    txt += "<article id="+field.id+">articulo</article>";
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
 
-                    if(txt != ""){
-                        $("#contenido").append(txt);
-                    }
-            		});
-            	});
-	        });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var url ="http://localhost:8080/taller/web/app_dev.php/api/puntos-interes/1";
 
-			// $(document).ready(function(){
-			// var idPunto = window.location.search.substring(1);
-	  //   	var url ="http://localhost/taller/web/app_dev.php/api/puntos-interes/"+idPunto;
+            $.getJSON(url, function(data) {
+                jsonObj = data;
+            })
+                .success(function() {
+                    var articulo = "";
+                    
+                    articulo += 
+                        "<article>" + 
+                            "<div class='row'>" + 
+                                "<div class='col s12 m6'>" + 
+                                    "<div class='card z-depth-3'>" + 
+                                        "<div class='card-image'>" + 
+                                            "<img src='" + jsonObj.urlImagen + "' class='activator'>" + 
+                                            "<span class='card-title activator'>" + jsonObj.nombre + "</span>" + 
+                                        "</div>" + 
 
-	  //       $.getJSON(url, function(data){
-	  //       	jsonObj = data;
-	  //       }).success(function(){
-	  //           $.each(jsonObj, function(i, field){
-	  //               var txt = "";
-	  //               text+="gola "+field.id+"";
-   //                  if(txt != ""){
-   //                      $("#contenido").append(txt);
-   //                  }
-   //          		});
-   //          	});
-	  //       });
-		</script>
+                                        "<div class='card-content'>" + 
+                                            "<p class='activator'>" + jsonObj.descripcion + "</p>" + 
+                                        "</div>" + 
+                                    
+                                        "<div class='card-reveal'>" + 
+                                            "<span class='card-title grey-text text-darken-4'>" + 
+                                                "<i class='material-icons right'>close</i>" + 
+                                            "</span>" + 
+                                            "<p><b>Dirección: </b>" + jsonObj.direccion + ".</p>" +
+                                            "<p><b>Latitud: </b>" + jsonObj.latitud + ".</p>" + 
+                                            "<p><b>Longitud: </b>" + jsonObj.longitud + ".</p>" +                                        
+                                        "</div>" + 
+                                    "</div>" + 
+                                "</div>" + 
+                            "</div>"+         
+                        "</article>";                      
+
+                    $("#contenido").append(articulo);
+            });
+        });
+    </script>
 </html>
