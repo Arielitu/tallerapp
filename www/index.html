@@ -5,13 +5,17 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, width=device-width" />
     <title>Puntos de interés</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> 
-    <link rel="stylesheet" type="text/css" href="css/materialize.min.css" /> 
+
+    <!-- Materialize 
+    –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+    <link rel="stylesheet" type="text/css" href="css/icon.css" />
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
 </head>
 
 <body>
+<!-- 
     <style type="text/css">
         .no-styled-anchor,
         .no-styled-anchor:hover,
@@ -24,62 +28,61 @@
             font-size: 20px;
         }
     </style>
+ -->
+    <nav>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a onclick="window.location.href='mapa.html'" class="btn-floating btn-large red">
+              <i class="large material-icons">map</i>
+            </a>
+        </div>
 
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header text-center" style="color: white">
-                <h2>Puntos de Interés</h2>
-            </div>
-        </div><!-- /.container-fluid -->
+        <div class="nav-wrapper">
+            <ul class="left">
+                <li><a href="index.html"><i class="material-icons">navigate_before</i></a></li>
+            </ul>
+            <a href="#" class="brand-logo center">Puntos de interés</a>
+        </div>
     </nav>
 
-    <div id="contenido" class="container-fluid">
-        <a id="btn-mapa" class="btn btn-success col-xs-12" onclick="window.location.href='mapa.html'">MAPA</a>
-        <br/><br/><br/>
-    </div>
+    <div id="contenido" class="container-fluid"></div>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     
     <script type="text/javascript">
         document.addEventListener('deviceready', function() {
             var url ="http://localhost:8080/taller/web/app_dev.php/api/puntos-interes";
 
-            $.getJSON(url)
-                .done(function(data) {
-                    $.each(data, function(i, field) {
-                        var txt = "";
-                        
-                        txt += 
-                            "<article id=" + field.id + ">" + 
-                                "<a class='no-styled-anchor' href='/articulo-detalle.html?id=" + field.id + "'>" + 
-                                    "<div class='panel panel-info'>" + 
-                                        "<div class='panel-heading'>" + 
-                                            "<h3 class='panel-title'>" + field.nombre + "</h3>" + 
-                                        "</div>" + 
-                                        "<div class='panel-body'>" + 
-                                            "<div class='media'>" + 
-                                                "<div class='media-left'>" + 
-                                                    "<img class='media-object' src='" + field['url-imagen'] + "' width='80'>" + 
-                                                "</div>" + 
-                                                "<div class='media-body'>" + 
-                                                    field.descripcion + 
-                                                "</div>" + 
-                                            "</div>" + 
-                                        "</div>" +
-                                    "</div>" + 
-                                "</a>" + 
-                            "</article>";
+            $.getJSON(url, function(data) {
+                jsonObjetos = data;
+            })
+                .success(function() {
+                    $.each(jsonObjetos, function(i, jsonObj) {
+                    var txt = "";
+                    
+                    txt += 
+                        "<article id=" + jsonObj.id + ">" + 
+                            "<div class='row'>" + 
+                                "<div class='col s12 m6'>" + 
+                                    "<div class='card z-depth-3'>" + 
+                                        "<a class='no-styled-anchor' href='/articulo-detalle.html?id=" + jsonObj.id + "'>" + 
 
-                        if(txt != "") {
-                            $("#contenido").append(txt);
-                        }
-                    });
+                                            "<div class='card-image'>" + 
+                                                "<img src='" + jsonObj.urlImagen + "' class='activator'>" + 
+                                                "<span class='card-title activator'>" + jsonObj.nombre + "</span>" + 
+                                            "</div>" + 
+                                        "</div>" + 
+                                    "</div>" + 
+                                "</div>" + 
+                            "</div>"+ 
+                        "</article>";
+
+                    $("#contenido").append(txt);
+
+                });
             });
-        }, false);
+        });
     </script>
 </body>
 
