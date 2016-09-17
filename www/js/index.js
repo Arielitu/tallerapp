@@ -1,4 +1,4 @@
-    var urlCoordenadas 		= "http://192.168.1.104/taller/web/app_dev.php/api/coordenadas";
+    var urlCoordenadas 		= window.baseURL + "/api/coordenadas";
 	var miLatitud 			= null;
 	var miLongitud 			= null;
     var arregloCoordenadas  = [];
